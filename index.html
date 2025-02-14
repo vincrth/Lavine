@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Envelope + Letter (Open/Close on Click)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" style="height: 75vh;">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="letter">
+                    <div class="text">
+                        <strong>An mis Baby...</strong>
+                        <p> Ih könnt mir nia a Leba ohne di vorstella du hilfsh mir durch alle schwierigi Zita. Du bish mini Traumfrau in jedera Art und Wies. Mit dir kanni Laha, Weina, Strita und Liaba. Nia hani jedi Art vo Emotion kennaglernt und nia hani dia Art vo Liabe kenna glernt.
+                            Jeda Tag ish Valentinstag mit dir. Heisst du bish sowieso jedatag min Valentine.
+                            Weil es aber nd so shö ish wiana Frog hani a bitz kreativer si wella.
+                            <p>So do you want to be my Valentine?</p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="heart"></div>
+        </div>
+        <div class="new-buttons-container">
+            <button class="new-button yes">Yes</button>
+            <button class="new-button no">No</button>
+        </div>
+    </div>
+    <script>
+        const envelope = document.querySelector('.envelope-wrapper');
+        const buttonsContainer = document.querySelector('.new-buttons-container');
+        
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('flap');
+            if (envelope.classList.contains('flap')) {
+                setTimeout(() => {
+                    buttonsContainer.style.display = 'flex';
+                }, 1000); // Reduced delay to make buttons appear faster
+            } else {
+                buttonsContainer.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('.new-button').forEach(button => {
+            button.addEventListener('mouseover', () => {
+                button.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--envelope-tab');
+                button.style.transform = 'translateY(-10px)'; // Make the button float
+            });
+            button.addEventListener('mouseout', () => {
+                if (button.classList.contains('yes')) {
+                    button.style.backgroundColor = 'green'; // Reset to green for Yes button
+                } else if (button.classList.contains('no')) {
+                    button.style.backgroundColor = 'red'; // Reset to red for No button
+                }
+                button.style.transform = 'translateY(0)'; // Reset the button position
+            });
+        });
+
+        let noClickCount = 0;
+        const noButtonTexts = [
+            "Liabsh mi ned",
+            "3 MOL???",
+            "Welsh mi verarscha alter",
+            "Bitte seg jo",
+            "Du bish so a sau",
+            "SEG JOOOO"
+        ];
+
+        document.querySelector('.new-button.no').addEventListener('click', () => {
+            const noButton = document.querySelector('.new-button.no');
+            
+            if (noClickCount < noButtonTexts.length) {
+                noButton.textContent = noButtonTexts[noClickCount]; // Change text on No button based on click count
+            }
+            
+            noClickCount++;
+        });
+
+        document.querySelector('.new-button.yes').addEventListener('click', () => {
+            const container = document.querySelector('.container');
+            container.innerHTML = '<img src="https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" alt="Celebration GIF" style="max-width: 100%; height: auto;">'; // Initial GIF of someone celebrating
+
+            const gifs = [
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+                "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif"
+            ];
+
+            let gifIndex = 0;
+            const interval = setInterval(() => {
+                if (gifIndex >= gifs.length) {
+                    clearInterval(interval);
+                    return;
+                }
+                const img = document.createElement('img');
+                img.src = gifs[gifIndex];
+                img.alt = "Celebration GIF";
+                img.style = `max-width: 100%; height: auto; position: absolute; top: ${Math.random() * 80}%; left: ${Math.random() * 80}%;`;
+                container.appendChild(img);
+                gifIndex++;
+            }, 1000);
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
